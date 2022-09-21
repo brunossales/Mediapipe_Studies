@@ -15,7 +15,7 @@
 
 <body>
     <div class="container">
-        <video id="inputVideo" class="input_video"></video>
+        <video autocapitalize="2" id="inputVideo" class="input_video"></video>
         <canvas class="output_canvas" width="1280px" height="720px"></canvas>
     </div>
 </body>
@@ -81,7 +81,7 @@
         minTrackingConfidence: 0.5
     });
     holistic.onResults(onResults);
-
+    
     const camera = new Camera(videoElement, {
         onFrame: async () => {
             await holistic.send({ image: videoElement });
