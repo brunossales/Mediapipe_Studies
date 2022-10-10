@@ -19,6 +19,7 @@ export function App() {
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
       <Text>Teste para o POC: Prova de conceito</Text>
+      <Text>Tela feita em React Native</Text>
       <Button title="Apertar para testar" onPress={handleOpenIntent} />
     </View>
   );

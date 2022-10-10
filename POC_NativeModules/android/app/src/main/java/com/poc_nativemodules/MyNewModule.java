@@ -3,6 +3,7 @@ package com.poc_nativemodules;
 import android.content.Intent;
 import android.hardware.Camera;
 import android.provider.MediaStore;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
