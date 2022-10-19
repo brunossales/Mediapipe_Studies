@@ -28,40 +28,15 @@ public class MyNewModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void handleClick(String name, Callback callback){
-        try{
-            String message = "Hi " + name;
-            callback.invoke(null, message);
-
-        } catch (Exception e){
-            callback.invoke(e, null);
-        }
-    }
-
-    @ReactMethod
     public void openIntent(){
         Intent open_activity = new Intent(getCurrentActivity(), AndroidActivity.class);
         getCurrentActivity().startActivity(open_activity);
     }
 
     @ReactMethod
-    public void safeCameraOpen() {
-        boolean qOpened = false;
-
-        try {
-            releaseCameraAndPreview();
-            camera = Camera.open(0);
-            qOpened = (camera != null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void releaseCameraAndPreview() {
-        if (camera != null) {
-            camera.release();
-            camera = null;
-        }
+    public void openMediapipeActivity(){
+        Intent open_mediapipe = new Intent(getCurrentActivity(), MediapipeAcitivy.class);
+        getCurrentActivity().startActivity(open_mediapipe);
     }
 
 

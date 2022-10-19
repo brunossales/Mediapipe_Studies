@@ -1,26 +1,27 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable prettier/prettier */
+
 import {Text, View, NativeModules, Button} from 'react-native';
 
-const {handleClick, safeCameraOpen, openIntent} = NativeModules.MyNewModule;
+const {openIntent, openMediapipeActivity} = NativeModules.MyNewModule;
 
 export function App() {
-  function handleOnPress() {
-    handleClick('Bruno', (err, message) => {
-      if (err) {
-        return console.log(err);
-      }
-      console.log(message);
-    });
-  }
-
   function handleOpenIntent() {
     openIntent();
+  }
+  function handleOpenMediapipeActivity() {
+    openMediapipeActivity();
   }
 
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Teste para o POC: Prova de conceito</Text>
+      <Text>Teste para abrir uma activity nativa</Text>
       <Text>Tela feita em React Native</Text>
-      <Button title="Apertar para testar" onPress={handleOpenIntent} />
+      <Button
+        title="Apertar para testar"
+        onPress={handleOpenMediapipeActivity}
+      />
     </View>
   );
 }

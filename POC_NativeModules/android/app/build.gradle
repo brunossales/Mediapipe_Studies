@@ -136,8 +136,8 @@ android {
 
     defaultConfig {
         applicationId "com.poc_nativemodules"
-        minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        minSdkVersion 21
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
@@ -249,7 +249,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
@@ -258,6 +258,20 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    // CameraX core library
+    def camerax_version = "1.0.0-beta10"
+    implementation "androidx.camera:camera-core:$camerax_version"
+    implementation "androidx.camera:camera-camera2:$camerax_version"
+    implementation "androidx.camera:camera-lifecycle:$camerax_version"
+
+    implementation 'com.google.mediapipe:solution-core:latest.release'
+    // Optional: MediaPipe Face Detection Solution.
+    implementation 'com.google.mediapipe:facedetection:latest.release'
+    // Optional: MediaPipe Face Mesh Solution.
+    implementation 'com.google.mediapipe:facemesh:latest.release'
+    // Optional: MediaPipe Hands Solution.
+    implementation 'com.google.mediapipe:hands:latest.release'
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'
@@ -280,6 +294,10 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+}
+
+configurations {
+    customConfig.extendsFrom implementation
 }
 
 if (isNewArchitectureEnabled()) {
