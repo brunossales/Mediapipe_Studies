@@ -13,3 +13,13 @@
 <img src="https://github.com/brunossales/Mediapipe_Studies/blob/main/POC_newHolisticNative/img/exemplo.jpg" />
 
 </div>
+
+## Imagem mostrando como foi mexido nos modulos nativo, no caso a função em java.
+
+
+<div align='center'>
+
+<img src="https://github.com/brunossales/Mediapipe_Studies/blob/main/POC_newHolisticNative/img/mediapipe.jfif" />
+
+</div>
+
