@@ -25,11 +25,13 @@ function App() {
     canvasCtx.clearRect(0,0, canvasElement.width, canvasElement.height)
     canvasCtx.drawImage(results.image, 0,0, canvasElement.width, canvasElement.height)
 
-    if (results.leftHandLandmarks) console.log(" ====== Mão esquerda aparecendo ====")
+    console.log(results);
 
-    if (results.rightHandLandmarks) console.log(" ******* Mão Direita aparecendo")
+    // if (results.leftHandLandmarks) console.log(" ====== Mão esquerda aparecendo ====")
 
-    if (results.faceLandmarks) console.log("///// Face Aparecendo /////////")
+    // if (results.rightHandLandmarks) console.log(" ******* Mão Direita aparecendo")
+
+    // if (results.faceLandmarks) console.log("///// Face Aparecendo /////////")
 
       
       //for (const landmarks of results.multiFaceLandMarks){
