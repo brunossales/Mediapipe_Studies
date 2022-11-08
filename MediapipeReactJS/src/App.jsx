@@ -6,8 +6,7 @@ import Webcam from "react-webcam";
 
 import React from "react";
 import { useEffect, useRef } from "react";
-import { FaceMesh } from "@mediapipe/face_mesh";
-import { templateHand } from "./objectTemplate";
+import { templateHand, templatePose } from "./objectTemplate";
 
 function App() {
   const webRef = useRef(null);
@@ -16,12 +15,8 @@ function App() {
   const connect = window.drawConnectors
 
   function onResults(results){
-    let objPoseRightLeftHand, objLeftHand, objRightHand;
-    // const arrayTest = results.leftHandLandmarks.map(test => {
-    //   testX : test.x;
-    //   testY : test.y;
-    //   testZ: test.z;
-    // })
+    let objPoseRightLeftHand;
+
     canvasRef.current.width=webRef.current.video.videoWidth
     canvasRef.current.height=webRef.current.video.videoHeight
 
@@ -32,28 +27,43 @@ function App() {
     canvasCtx.clearRect(0,0, canvasElement.width, canvasElement.height)
     canvasCtx.drawImage(results.image, 0,0, canvasElement.width, canvasElement.height)
 
-    //20 pontos nas maos
-    //Somente o pose aparece a visibility - v
-    //Se as maos ainda não estejam sendo reconhecidas, solta os pontos como 0
 
-    //caso não estejam sendo reconhecidos, retorne os pontos todos como 0
-    objLeftHand = {"LEFT_HAND" : results.leftHandLandmarks ? {...results.leftHandLandmarks} : templateHand};
-    objRightHand = {"RIGHT_HAND" : results.rightHandLandmarks ? {...results.rightHandLandmarks} : templateHand}
+    if (results.leftHandLandmarks) {
+      results.leftHandLandmarks.map((item) => {
+        delete item.visibility;
+      })
+    }
+
+    if (results.rightHandLandmarks) {
+      results.rightHandLandmarks.map((item) => {
+        delete item.visibility;
+      })
+    }
 
 
-    objPoseRightLeftHand = {"POSE" : {...results.poseLandmarks}, 
-                            objLeftHand, 
-                            objRightHand}
+    if (results.poseLandmarks) {
+      results.poseLandmarks.map((item) => {
+        item.v = item.visibility
+        delete item.visibility
+        
+      })
+    }
+
+    // Após tirar o VISIBILITY das mãos e renomear o VISIBILITY do POSE para V
+    // Agora é printar eles da seguinte forma e titulos:
+     objPoseRightLeftHand = {"POSE" : results.poseLandmarks ? 
+                                                            {...results.poseLandmarks} :
+                                                            templatePose, 
+                            "LEFT_HAND" : results.leftHandLandmarks ? 
+                                                                    {...results.leftHandLandmarks} : 
+                                                                    templateHand, 
+                            "RIGHT_HAND" : results.rightHandLandmarks ?
+                                                                      {...results.rightHandLandmarks} :
+                                                                      templateHand
+                            }
 
 
-    console.log(objLeftHand);
-    console.log(results);
-
-    // if (results.leftHandLandmarks) console.log(" ====== Mão esquerda aparecendo ====")
-
-    // if (results.rightHandLandmarks) console.log(" ******* Mão Direita aparecendo")
-
-    // if (results.faceLandmarks) console.log("///// Face Aparecendo /////////")
+      console.log(objPoseRightLeftHand);
 
       
       //for (const landmarks of results.multiFaceLandMarks){
@@ -93,7 +103,8 @@ function App() {
       minDetectionConfidence: 0.5,
       minTrackingConfidence: 0.5,
     });
-    holistic.onResults(onResults);
+
+      holistic.onResults(onResults);
 
 
     if(typeof webRef.current !== "undefined" && webRef.current !== null){
